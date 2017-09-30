@@ -1,2 +1,2 @@
-# calendaly-front
+# calendarly-front
 Front-end code
