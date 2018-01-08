@@ -1,0 +1,243 @@
+<div class="container">
+
+    <div class="card" id="profile-main">
+        <div class="pm-overview c-overflow">
+
+
+            <div class="card">
+
+                <div class="card-body card-padding">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="f-500 m-b-15 c-black">Status</p>
+
+                            <select class="selectpicker">
+                                    <option>In Progress</option>
+                                    <!-- <option>Ketchup</option>
+                                    <option>Relish</option> -->
+                                  </select>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <p class="f-500 m-b-15 c-black">Assigned To</p>
+
+
+                            <select class="selectpicker" data-live-search="true">
+                                    <option>Users</option>
+                                    
+                                </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pmo-block pmo-items hidden-xs">
+                <h2>Watchers</h2>
+
+                <div class="pmob-body">
+                    <div class="row">
+                        <a *ngIf="isWatch" class="col-xs-2">
+                            <img class="img-circle" src="./assets/img/profile-pics/profile-pic-2.jpg" alt="">
+                        </a>
+                        <a href="" class="col-xs-2">
+                            <img class="img-circle" src="assets/img/profile-pics/1.jpg" alt="">
+                        </a>
+                        <a href="" class="col-xs-2">
+                            <img class="img-circle" src="assets/img/profile-pics/2.jpg" alt="">
+                        </a>
+                        <a href="" class="col-xs-2">
+                            <img class="img-circle" src="assets/img/profile-pics/3.jpg" alt="">
+                        </a>
+                        <a href="" class="col-xs-2">
+                            <img class="img-circle" src="assets/img/profile-pics/4.jpg" alt="">
+                        </a>
+                        <a href="" class="col-xs-2">
+                            <img class="img-circle" src="assets/img/profile-pics/5.jpg" alt="">
+                        </a>
+                        <a href="" class="col-xs-2">
+                            <img class="img-circle" src="assets/img/profile-pics/6.jpg" alt="">
+                        </a>
+                        <a href="" class="col-xs-2">
+                            <img class="img-circle" src="assets/img/profile-pics/7.jpg" alt="">
+                        </a>
+                        <a href="" class="col-xs-2">
+                            <img class="img-circle" src="assets/img/profile-pics/8.jpg" alt="">
+                        </a>
+                        <a href="" class="col-xs-2">
+                            <img class="img-circle" src="assets/img/profile-pics/1.jpg" alt="">
+                        </a>
+                        <a href="" class="col-xs-2">
+                            <img class="img-circle" src="assets/img/profile-pics/2.jpg" alt="">
+                        </a>
+                        <a href="" class="col-xs-2">
+                            <img class="img-circle" src="assets/img/profile-pics/3.jpg" alt="">
+                        </a>
+
+                    </div>
+
+                </div>
+                <br>
+                <button *ngIf="!isWatch" (click)="onWatchToggle()" class="btn btn-primary waves-effect waves-button waves-float">
+                    Watch  </button>
+
+                <button *ngIf="isWatch" (click)="onWatchToggle()" class="btn btn-primary waves-effect waves-button waves-float">
+                            Unwatch  </button>
+            </div>
+        </div>
+
+        <div class="pm-body clearfix">
+            <ul class="tab-nav tn-justified">
+                <li class="active waves-effect nav-link"><a>Post</a></li>
+                <button (click)="deletePost(post)" style="margin:2px;" class="btn btn-default btn-icon waves-effect waves-button waves-float pull-right">
+                        <i class="fa fa-trash nav-icon" aria-hidden="true"></i></button>
+                <div class="clearfix"></div>
+                <!-- <li class="waves-effect"><a href="profile-timeline.html">Timeline</a></li>
+                <li class="waves-effect"><a href="profile-photos.html">Photos</a></li>
+                <li class="waves-effect"><a href="profile-connections.html">Connections</a></li> -->
+            </ul>
+
+
+            <div class="pmb-block">
+                <app-create-post [postData]="post" (exit)="exit()" id="attachFile" (formUpdated)="formUpdated($event)" (formSubmitted)="formSubmitted($event)"></app-create-post>
+            </div>
+            <hr>
+            <div class="timeline">
+                <div class="card" *ngIf="!post.comments.length">
+                    <div class="card-content">
+                        <li class="p-20 unlisted">
+                            <div class="fg-line">
+                                <textarea class="form-control auto-size" [(ngModel)]="commentBody" placeholder="Write a comment..."></textarea>
+                            </div>
+
+                            <button class="m-t-15 btn btn-primary btn-sm pull-left" (click)="postComment(commentBody,post)">Comment</button>
+                            <button class="m-t-15 btn btn-primary btn-sm pull-right" (click)="addAttachment()">Attatchment</button>
+                            <div class="clearfix"></div>
+                        </li>
+                    </div>
+                </div>
+                <div class="t-view" data-tv-type="text" *ngIf="post.comments.length">
+                    <div class="tv-comments">
+                        <ul class="tvc-lists">
+                            <li class="media" *ngFor="let comment of post.comments">
+                                <ul class="actions pull-right">
+
+                                    <li class="dropdown">
+                                        <a href="" data-toggle="dropdown">
+                                            <i class="md md-more-vert"></i>
+                                        </a>
+
+                                        <ul class="dropdown-menu dropdown-menu-right">
+                                            <li>
+                                                <a>Edit</a>
+                                            </li>
+                                            <li>
+                                                <a (click)="deleteComment(post)">Delete</a>
+                                            </li>
+
+                                        </ul>
+                                    </li>
+                                </ul>
+                                <a href="" class="tvh-user pull-left">
+                                    <img class="img-responsive" src="./assets/img/profile-pics/1.jpg" alt="">
+                                </a>
+                                <div class="media-body">
+                                    <strong class="d-block">{{comment.name}}</strong>
+                                    <small class="c-gray">{{comment.date | date:'medium'}}</small>
+
+                                    <div class="m-t-10">
+                                        {{comment.body}}
+                                    </div>
+
+                                </div>
+                            </li>
+
+
+                            <!-- <li class="media">
+                                <a href="" class="tvh-user pull-left">
+                                    <img class="img-responsive" src="./assets/img/profile-pics/2.jpg" alt="">
+                                </a>
+                                <div class="media-body">
+                                    <strong class="d-block">Wernall Parnell</strong>
+                                    <small class="c-gray">April 22, 2014 at 13:00</small>
+
+                                    <div class="m-t-10">Nulla vehicula erat nec odio dignissim, sit amet porttitor lorem auctor. Maecenas fermentum tellus ex, ac aliquet nisl malesuada id.</div>
+
+                                </div>
+                            </li>
+
+                            <li class="media">
+                                <a href="" class="tvh-user pull-left">
+                                    <img class="img-responsive" src="./assets/img/profile-pics/3.jpg" alt="">
+                                </a>
+                                <div class="media-body">
+                                    <strong class="d-block">Shane Lee Yong</strong>
+                                    <small class="c-gray">April 19, 2014 at 10:10</small>
+
+                                    <div class="m-t-10">Sit amet porttitor lorem auctor. Maecenas fermentum tellus ex, ac aliquet nisl malesuada idwoon lorem ipsum.</div>
+                                </div>
+                            </li> -->
+
+                            <li class="p-20">
+                                <div class="fg-line">
+                                    <textarea class="form-control auto-size" [(ngModel)]="commentBody" placeholder="Write a comment..."></textarea>
+                                </div>
+
+                                <button class="m-t-15 btn btn-primary btn-sm pull-left" (click)="postComment(commentBody,post)">Comment</button>
+                                <button class="m-t-15 btn btn-primary btn-sm pull-right" (click)="addAttachment()">Attachment</button>
+                                <div class="clearfix"></div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="timeline">
+                <div class="card" *ngFor="let item of posts">
+                    <div class="card-header ch-alt">
+                        <ul class="tvc-lists posts-header">
+                            <li class="media">
+                                <a href="" class="tvh-user pull-left">
+                                    <img class="img-responsive" src="./assets/img/profile-pics/1.jpg" alt="">
+                                </a>
+                                <div class="media-body">
+                                    <strong class="d-block">{{item.name}}</strong>
+                                    <small class="c-gray">{{item.date | date:'medium'}}</small>
+
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="actions">
+
+                            <li class="dropdown">
+                                <a href="" data-toggle="dropdown">
+                                    <i class="md md-more-vert"></i>
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-right">
+                                    <li>
+                                        <a>Edit</a>
+                                    </li>
+                                    <li>
+                                        <a>Delete</a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="card-body card-padding">
+                        {{item.description}}
+                    </div>
+                </div>
+                <div class="load-more" *ngIf="post.comments.length">
+                    <a href=""><i class="md md-refresh"></i> Load More...</a>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

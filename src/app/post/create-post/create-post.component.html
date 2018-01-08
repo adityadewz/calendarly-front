@@ -1,0 +1,227 @@
+<h6 *ngIf="isSubmitClicked&&createPost.touched&&createPost.invalid" class="danger">
+
+    Fields marked in red are mandatory</h6>
+<form [formGroup]="createPost" (ngSubmit)="submitForm()">
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group" [ngClass]="{'has-success':createPost.get('title').touched&&createPost.get('title').valid,'has-error':createPost.get('title').touched&&createPost.get('title').invalid}">
+                <label for="eventName">Title</label>
+                <div class="fg-line">
+                    <input formControlName="title" type="text" class="input-sm form-control" id="eventName" placeholder="eg: Sports day">
+                </div>
+                <small class="help-block"></small>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="input-group form-group" [ngClass]="{'has-success':createPost.get('date').touched&&createPost.get('date').valid,'has-error':createPost.get('date').touched&&createPost.get('date').invalid}">
+                <span class="input-group-addon"><i class="md md-event"></i></span>
+                <div class="dtp-container dropdown fg-line">
+                    <label for="eventName">Date Picker</label>
+                    <input formControlName="date" [value]="createPost.value.date | date:'shortDate'" type='text' class="form-control date-picker1" data-toggle="dropdown" placeholder="Click here...">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+            <div class="input-group form-group" [ngClass]="{'has-success':createPost.get('time').touched&&createPost.get('time').valid,'has-error':createPost.get('time').touched&&createPost.get('time').invalid}">
+                <span class="input-group-addon"><i class="md md-access-time"></i></span>
+                <div class="dtp-container dropdown fg-line">
+                    <label for="eventName">Time Picker</label>
+                    <input formControlName="time" [value]="createPost.value.time | date:'shortTime'" type='text' class="form-control time-picker1" data-toggle="dropdown" placeholder="Click here...">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group" [ngClass]="{'has-success':createPost.get('topic.name').touched&&createPost.get('topic.name').valid,'has-error':createPost.get('topic.name').touched&&createPost.get('topic.name').invalid}">
+                <label for="eventName">Topic</label>
+                <div class="fg-line" formGroupName="topic">
+                    <input type="text" formControlName="name" value="Topic1,Topic2" data-role="tagsinput" class="tagsinput">
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group" [ngClass]="{'has-success':createPost.get('tags').touched&&createPost.get('tags').valid,'has-error':createPost.get('tags').touched&&createPost.get('tags').invalid}">
+                <label for="eventName">Tags</label>
+                <div class="fg-line">
+                    <input type="text" formControlName="tags" value="Tag-A,Tag-B" data-role="tagsinput" class="tagsinput">
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+
+                <label for="eventName">Social Profile</label>
+                <div class="fg-line">
+                    <input type="text" value="Facebook-Global" data-role="tagsinput" class="tagsinput">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+        <div class="col-md-2">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <span class="btn btn-primary btn-file m-r-10">
+                                                                <span class="fileinput-new">Select file</span>
+                <span class="fileinput-exists">Change</span>
+                <input type="file" name="...">
+                </span>
+                <span class="fileinput-filename"></span>
+                <a href="#" class="close fileinput-exists" data-dismiss="fileinput">&times;</a>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <div class="fileinput fileinput-new" data-provides="fileinput">
+                <span class="btn btn-info btn-file m-r-10">
+                                                                    <span class="fileinput-new">Select Image</span>
+                <span class="fileinput-exists">Change</span>
+                <input type="file" name="...">
+                </span>
+                <span class="fileinput-filename"></span>
+                <a href="#" class="close fileinput-exists" data-dismiss="fileinput">&times;</a>
+            </div>
+        </div>
+    </div> -->
+    <div class="row">
+        <div class="col-md-12">
+            <!-- <div class="card">
+                <div class="card-header">
+                    <h2>Description
+                    </h2>
+                </div>
+
+                <div class="card-body">
+
+                    <textarea [froalaEditor] formControlName="description"></textarea>
+
+                </div>
+
+
+            </div> -->
+            <div class="card">
+                <div class="card-header">
+                    <h2>Description</h2>
+                </div>
+
+                <div class="card-body">
+
+                    <div class="html-editor1"></div>
+
+
+                </div>
+            </div>
+            <div class="card" id="attachFile">
+                <div class="card-header">
+                    <h2>Attach Post <small>Write your post in your favorite word processor or design software and drag it here or click below to attach files for your colleagues to provide feedback on.</small></h2>
+                </div>
+
+                <div class="card-body card-padding">
+                    <div class="contacts clearfix row">
+                        <div class="col-md-2 col-sm-6 col-xs-6 " *ngFor="let file of files;let i=index;">
+                            <div class="c-item">
+                                <a class="ci-avatar file-image">
+                                    <i class="fa pull-right eye" (click)="toggleVisibility(file)" [ngClass]="{'fa-eye-slash':file.isVisible,'fa-eye ':!file.isVisible}" aria-hidden="true"></i>
+
+                                    <img src="./assets/img/file.png" alt="powerpoint">
+
+                                    <!-- <ng-container *ngIf="file.type==='application/msword' || file.type==='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                                    || file.type==='application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
+                                    file.type==='video/mp4'">
+                                        <img *ngIf="file.type==='application/msword' || file.type==='application/vnd.openxmlformats-officedocument.wordprocessingml.document'" src="./assets/img/word-file.png" alt="file">
+                                        <img src="./assets/img/ppt-file.png" *ngIf="file.type==='application/vnd.openxmlformats-officedocument.presentationml.presentation'" alt="powerpoint">
+                                        <img src="./assets/img/video-file.png" *ngIf="file.type==='video/mp4'" alt="powerpoint">
+                                    </ng-container>
+                                    <ng-container *ngIf="file.type!=='application/msword' || file.type!=='application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+                                    || file.type!=='application/vnd.openxmlformats-officedocument.presentationml.presentation' ||
+                                    file.type!=='video/mp4'">
+                                        <img src="./assets/img/file.png" alt="powerpoint">
+
+                                    </ng-container> -->
+                                    <br>
+                                    <h5 style="padding:10px;overflow:auto;">{{file.name | continue}}</h5>
+                                </a>
+
+                                <div class="c-footer">
+                                    <div class="btn-group download-group">
+                                        <button type="button" class="btn btn-default attachmentBtn" (click)="deleteFile(i)">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                            </button>
+
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-default dropdown-toggle attachmentBtn" data-toggle="dropdown">
+                                                            
+                                                            <span class="caret"></span>
+                                                        </button>
+                                            <ul class="dropdown-menu" role="menu">
+                                                <li><a href="#">Upload new version</a></li>
+                                                <li><a href="#">Version 3</a></li>
+                                                <li><a href="#">Version 2</a></li>
+                                                <li><a href="#">Version 1</a></li>
+                                            </ul>
+                                        </div>
+                                        <button type="button" class="btn btn-default attachmentBtn">
+                                                    <i class="fa fa-link" aria-hidden="true"></i>
+                                                </button>
+                                    </div>
+                                    <!-- <button class="waves-effect"><i class="fa fa-trash" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="waves-effect"><i class="fa fa-caret-down" aria-hidden="true"></i>
+                                        </button>
+                                        <button class="waves-effect">
+                                                <i class="fa fa-link" aria-hidden="true"></i>
+                                                
+                                        </button> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <span class="btn btn-primary btn-file m-r-10">
+                                        <span class="fileinput-new">Select file</span>
+                            <span class="fileinput-exists pull-right">FROM MY COMPUTER</span>
+                            <span class="fileinput-exists pull-right">FROM A URL</span>
+                            <div class="clearfix"></div>
+                            <input (change)="selectFiles($event)" type="file" name="..." multiple>
+                            </span>
+                            <span class="fileinput-filename"></span>
+                        </div> -->
+
+                </div>
+
+                <div class="card-footer">
+                    <input type="file" multiple id="fileUpload" (change)="selectFiles($event)">
+
+                    <button type="button" class="upload-btn btn btn-primary waves-effect waves-button waves-float pull-right">
+                                FROM A URL
+                            </button>
+
+                    <button type="button" (click)="uploadFiles()" class="upload-btn btn btn-primary waves-effect waves-button waves-float pull-right">
+                            FROM MY COMPUTER
+                        </button>
+
+                    <div class="clearfix"></div>
+                    <!-- <a href="#" class="close fileinput-exists" data-dismiss="fileinput">&times;</a> -->
+
+
+                </div>
+
+
+                <!-- <button type="button" [disabled]="createPost.invalid" *ngIf="isEditMode&&createPost.dirty" (click)="updatePost()" class="btn btn-success waves-effect waves-button waves-float pull-right submit-btn" id="addEvent">Update Post</button> -->
+                <!-- <button type="button" [disabled]="createPost.invalid" (click)="deletePost(currentPost)" class="btn btn-danger submit-btn waves-effect pull-right waves-button waves-float" id="addEvent2" *ngIf="isEditMode">Delete Post</button> -->
+                <button type="button" class="btn btn-danger waves-effect waves-button pull-right submit-btn waves-float" *ngIf="!editMode" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-danger waves-effect waves-button pull-right submit-btn waves-float" *ngIf="editMode" (click)="cancel()">Cancel</button>
+                <button type="button" (click)="submitForm()" class="btn btn-primary waves-effect waves-button waves-float pull-right submit-btn" id="addEvent" *ngIf="!editMode">Save</button>
+                <button type="button" (click)="updateForm()" class="btn btn-primary waves-effect waves-button waves-float pull-right submit-btn" id="addEvent" *ngIf="editMode">Update</button>
+
+
+            </div>
+        </div>
+    </div>
+</form>

@@ -1,0 +1,38 @@
+textarea.note-codable {
+    display: none !important;
+}
+
+a[target=_blank] {
+    display: none !important;
+}
+
+.modal-dialog {
+    /* z-index: 999; */
+    max-height: 800px;
+    overflow-y: scroll;
+}
+
+td {
+    cursor: pointer;
+}
+
+.modal-footer {
+    padding-bottom: 60px;
+}
+
+.waves-effect {
+    width: auto !important;
+    display: inline-block !important;
+}
+
+.download-group {
+    width: 100%;
+}
+
+#fileUpload {
+    display: none;
+}
+
+.upload-btn {
+    margin: 10px;
+}
